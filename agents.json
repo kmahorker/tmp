@@ -1,673 +1,1052 @@
 {
-  "agentsJson": "1.0.0",
-  "info": {
-    "title": "Stripe Integration",
-    "version": "1.0.0",
-    "description": "Demonstrates how to use Stripe endpoints with an AI agent."
-  },
-  "sources": [
-    {
-      "id": "stripe",
-      "path": "https://raw.githubusercontent.com/kmahorker/tmp/refs/heads/master/stripe_openapi.yaml"
-    }
-  ],
-  "overrides": [],
-  "flows": [
-    {
-      "id": "stripe-post-customers",
-      "title": "Create Customer (POST)",
-      "description": "Creates a new customer object in Stripe.",
-      "actions": [
-        {
-          "id": "action-stripe-post-customers",
-          "sourceId": "stripe",
-          "operationId": "stripe_post_customers"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [
+    "agentsJson": "1.0.0",
+    "info": {
+      "title": "Stripe Integration",
+      "version": "1.0.0",
+      "description": "Agentic workflows for interacting with the Stripe API to automate common tasks and operations."
+    },
+    "sources": [
+      {
+        "id": "stripe_api",
+        "path": "https://raw.githubusercontent.com/kmahorker/tmp/refs/heads/master/stripe_openapi.yaml"
+      }
+    ],
+    "overrides": [],
+    "flows": [
+      {
+        "id": "manage_products_prices",
+        "title": "Manage Products and Prices",
+        "description": "Automates the creation, updating, and retrieval of products and their associated prices.",
+        "actions": [
           {
-            "name": "email",
-            "description": "The customer's email address.",
-            "required": false
+            "id": "create_product",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_post_products"
           },
           {
-            "name": "name",
-            "description": "The customer's full name.",
-            "required": false
-          }
-        ],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-get-customers",
-      "title": "List Customers (GET)",
-      "description": "Retrieves a list of all customers from Stripe.",
-      "actions": [
-        {
-          "id": "action-stripe-get-customers",
-          "sourceId": "stripe",
-          "operationId": "stripe_get_customers"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-post-products",
-      "title": "Create Product (POST)",
-      "description": "Creates a new product object in Stripe.",
-      "actions": [
-        {
-          "id": "action-stripe-post-products",
-          "sourceId": "stripe",
-          "operationId": "stripe_post_products"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [
-          {
-            "name": "name",
-            "description": "The product's name, meant to be displayed to the customer.",
-            "required": true
+            "id": "create_price",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_post_prices"
           },
           {
-            "name": "description",
-            "description": "The product's description, meant to be displayed to the customer.",
-            "required": false
-          }
-        ],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-get-products",
-      "title": "List Products (GET)",
-      "description": "Retrieves a list of all products from Stripe.",
-      "actions": [
-        {
-          "id": "action-stripe-get-products",
-          "sourceId": "stripe",
-          "operationId": "stripe_get_products"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-post-prices",
-      "title": "Create Price (POST)",
-      "description": "Creates a new price object in Stripe.",
-      "actions": [
-        {
-          "id": "action-stripe-post-prices",
-          "sourceId": "stripe",
-          "operationId": "stripe_post_prices"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [
-          {
-            "name": "unit_amount",
-            "description": "Amount (in cents) to be charged, e.g. 1000 for $10.00.",
-            "required": true
+            "id": "list_products",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_products"
           },
           {
-            "name": "currency",
-            "description": "Three-letter ISO currency code, in lowercase. Must be a supported currency.",
-            "required": true
+            "id": "list_prices",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_prices"
           },
           {
-            "name": "product",
-            "description": "Product ID to create a price for.",
-            "required": true
-          }
-        ],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-get-prices",
-      "title": "List Prices (GET)",
-      "description": "Retrieves a list of all prices from Stripe.",
-      "actions": [
-        {
-          "id": "action-stripe-get-prices",
-          "sourceId": "stripe",
-          "operationId": "stripe_get_prices"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-post-payment-links",
-      "title": "Create Payment Link (POST)",
-      "description": "Create a payment link object in Stripe.",
-      "actions": [
-        {
-          "id": "action-stripe-post-payment-links",
-          "sourceId": "stripe",
-          "operationId": "stripe_post_payment_links"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [
-          {
-            "name": "line_items",
-            "description": "A list of line items the customer is purchasing.",
-            "required": true
-          }
-        ],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-post-invoices",
-      "title": "Create Invoice (POST)",
-      "description": "Creates a new invoice object in Stripe.",
-      "actions": [
-        {
-          "id": "action-stripe-post-invoices",
-          "sourceId": "stripe",
-          "operationId": "stripe_post_invoices"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [
-          {
-            "name": "customer",
-            "description": "The ID of the customer who will be billed.",
-            "required": true
-          }
-        ],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-post-invoiceitems",
-      "title": "Create Invoice Item (POST)",
-      "description": "Creates an invoice item and adds it to an existing invoice.",
-      "actions": [
-        {
-          "id": "action-stripe-post-invoiceitems",
-          "sourceId": "stripe",
-          "operationId": "stripe_post_invoiceitems"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [
-          {
-            "name": "customer",
-            "description": "The ID of the customer who will be billed.",
-            "required": true
+            "id": "update_price",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_post_prices_price"
           },
           {
-            "name": "amount",
-            "description": "The integer amount in cents of the charge to be applied.",
-            "required": true
+            "id": "retrieve_price",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_prices_price"
+          }
+        ],
+        "links": [
+          {
+            "source": {
+              "actionId": "create_product",
+              "fieldPath": "response.id"
+            },
+            "target": {
+              "actionId": "create_price",
+              "fieldPath": "parameters.product"
+            }
           },
           {
-            "name": "currency",
-            "description": "Three-letter ISO currency code, in lowercase. Must be a supported currency.",
-            "required": true
+            "source": {
+              "actionId": "create_price",
+              "fieldPath": "response.id"
+            },
+            "target": {
+              "actionId": "update_price",
+              "fieldPath": "parameters.price_id"
+            }
           }
         ],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-post-invoices-invoice-finalize",
-      "title": "Finalize Invoice (POST)",
-      "description": "Finalize the specified draft invoice.",
-      "actions": [
-        {
-          "id": "action-stripe-post-invoices-invoice-finalize",
-          "sourceId": "stripe",
-          "operationId": "stripe_post_invoices_invoice_finalize"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [
-          {
-            "name": "invoice",
-            "description": "ID of the invoice you want to finalize.",
-            "required": true
-          }
-        ],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-get-balance",
-      "title": "Retrieve Balance (GET)",
-      "description": "Retrieves the current account balance for your Stripe account.",
-      "actions": [
-        {
-          "id": "action-stripe-get-balance",
-          "sourceId": "stripe",
-          "operationId": "stripe_get_balance"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-post-refunds",
-      "title": "Create Refund (POST)",
-      "description": "Creates a new refund for a previously created charge.",
-      "actions": [
-        {
-          "id": "action-stripe-post-refunds",
-          "sourceId": "stripe",
-          "operationId": "stripe_post_refunds"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [
-          {
-            "name": "charge",
-            "description": "Charge ID to refund.",
-            "required": true
-          },
-          {
-            "name": "amount",
-            "description": "A positive integer in cents representing how much to refund.",
-            "required": false
-          }
-        ],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-post-products-id",
-      "title": "Update Product (POST)",
-      "description": "Updates the specific Stripe product by ID.",
-      "actions": [
-        {
-          "id": "action-stripe-post-products-id",
-          "sourceId": "stripe",
-          "operationId": "stripe_post_products_id"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [
-          {
-            "name": "id",
-            "description": "The ID of the product to update.",
-            "required": true
-          },
-          {
-            "name": "name",
-            "description": "The new name for the product.",
-            "required": false
-          }
-        ],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-get-products-id",
-      "title": "Retrieve Product by ID (GET)",
-      "description": "Retrieves the Stripe product object by ID.",
-      "actions": [
-        {
-          "id": "action-stripe-get-products-id",
-          "sourceId": "stripe",
-          "operationId": "stripe_get_products_id"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [
-          {
-            "name": "id",
-            "description": "The ID of the product to retrieve.",
-            "required": true
-          }
-        ],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-post-checkout-sessions",
-      "title": "Create Checkout Session (POST)",
-      "description": "Create a new checkout session in Stripe.",
-      "actions": [
-        {
-          "id": "action-stripe-post-checkout-sessions",
-          "sourceId": "stripe",
-          "operationId": "stripe_post_checkout_sessions"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [
-          {
-            "name": "line_items",
-            "description": "A list of items the customer is buying.",
-            "required": true
-          },
-          {
-            "name": "mode",
-            "description": "The mode of the Checkout Session (payment, subscription, or setup).",
-            "required": true
-          },
-          {
-            "name": "success_url",
-            "description": "URL to which Stripe should redirect when payment completes.",
-            "required": true
-          },
-          {
-            "name": "cancel_url",
-            "description": "URL to which Stripe should redirect when payment is canceled.",
-            "required": true
-          }
-        ],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-post-billing-portal-sessions",
-      "title": "Create Billing Portal Session (POST)",
-      "description": "Creates a session of the customer portal.",
-      "actions": [
-        {
-          "id": "action-stripe-post-billing-portal-sessions",
-          "sourceId": "stripe",
-          "operationId": "stripe_post_billing_portal_sessions"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [
-          {
-            "name": "customer",
-            "description": "ID of an existing customer.",
-            "required": true
-          },
-          {
-            "name": "return_url",
-            "description": "The URL to which the customer will be redirected when they exit the portal.",
-            "required": true
-          }
-        ],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-get-prices-price",
-      "title": "Retrieve Price by ID (GET)",
-      "description": "Retrieves a specific price object by ID.",
-      "actions": [
-        {
-          "id": "action-stripe-get-prices-price",
-          "sourceId": "stripe",
-          "operationId": "stripe_get_prices_price"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [
-          {
-            "name": "price",
-            "description": "The ID of the price to retrieve.",
-            "required": true
-          }
-        ],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-post-prices-price",
-      "title": "Update Price (POST)",
-      "description": "Updates the specified price object by ID.",
-      "actions": [
-        {
-          "id": "action-stripe-post-prices-price",
-          "sourceId": "stripe",
-          "operationId": "stripe_post_prices_price"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [
-          {
-            "name": "price",
-            "description": "The ID of the price to update.",
-            "required": true
-          },
-          {
-            "name": "nickname",
-            "description": "A brief nickname for the price for the customer's convenience.",
-            "required": false
-          }
-        ],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-get-customers-search",
-      "title": "Search Customers (GET)",
-      "description": "Search for customers using the provided query string.",
-      "actions": [
-        {
-          "id": "action-stripe-get-customers-search",
-          "sourceId": "stripe",
-          "operationId": "stripe_get_customers_search"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [
-          {
-            "name": "query",
-            "description": "The search query string, e.g. email:'test@example.com'.",
-            "required": true
-          }
-        ],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-get-customers-customer",
-      "title": "Retrieve Customer by ID (GET)",
-      "description": "Retrieves the Stripe customer object by customer ID.",
-      "actions": [
-        {
-          "id": "action-stripe-get-customers-customer",
-          "sourceId": "stripe",
-          "operationId": "stripe_get_customers_customer"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [
-          {
-            "name": "customer",
-            "description": "The ID of the customer to retrieve.",
-            "required": true
-          }
-        ],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-get-billing-portal-configurations",
-      "title": "List Billing Portal Configurations (GET)",
-      "description": "Retrieves a list of all billing portal configurations.",
-      "actions": [
-        {
-          "id": "action-stripe-get-billing-portal-configurations",
-          "sourceId": "stripe",
-          "operationId": "stripe_get_billing_portal_configurations"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-post-billing-portal-configurations",
-      "title": "Create Billing Portal Configuration (POST)",
-      "description": "Creates a new configuration that defines the functionality of the customer portal.",
-      "actions": [
-        {
-          "id": "action-stripe-post-billing-portal-configurations",
-          "sourceId": "stripe",
-          "operationId": "stripe_post_billing_portal_configurations"
-        }
-      ],
-      "links": [],
-      "fields": {
-        "parameters": [
-          {
-            "name": "business_profile",
-            "description": "Information about the business for the portal configuration.",
-            "required": false
-          }
-        ],
-        "requestBody": {},
-        "responses": {}
-      }
-    },
-    {
-      "id": "stripe-create-product-and-price",
-      "title": "Create Product and Price",
-      "description": "Use this flow when you need to create both a product and its associated price in one operation. The flow will first create the product, then automatically use the new product's ID to create a price for it.",
-      "actions": [
-        {
-          "id": "action-create-product",
-          "sourceId": "stripe",
-          "operationId": "stripe_post_products"
-        },
-        {
-          "id": "action-create-price",
-          "sourceId": "stripe",
-          "operationId": "stripe_post_prices"
-        }
-      ],
-      "links": [
-        {
-          "source": {
-            "actionId": "action-create-product",
-            "fieldPath": "response.id"
-          },
-          "target": {
-            "actionId": "action-create-price",
-            "fieldPath": "parameters.product"
-          }
-        }
-      ],
-      "fields": {
-        "parameters": [
-          {
-            "name": "name",
-            "description": "Specify the product's name that will be shown to customers. Example: 'Premium Subscription' or 'Basic Plan'.",
-            "required": true
-          },
-          {
-            "name": "description",
-            "description": "Optionally provide additional details about the product. Example: 'Monthly subscription with unlimited access'.",
-            "required": false
-          },
-          {
-            "name": "unit_amount",
-            "description": "Specify the price in cents (smallest currency unit). For example, use 1000 for $10.00 USD, or 2500 for £25.00 GBP.",
-            "required": true
-          },
-          {
-            "name": "currency",
-            "description": "Specify the three-letter ISO currency code in lowercase. Examples: 'usd', 'eur', 'gbp', 'jpy'.",
-            "required": true
-          }
-        ],
-        "requestBody": {},
-        "responses": {
-          "200": {
-            "description": "Successfully created product and price.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "product": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string"
-                        },
-                        "name": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "price": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string"
-                        },
-                        "currency": {
-                          "type": "string"
-                        },
-                        "unit_amount": {
-                          "type": "integer"
-                        }
-                      }
-                    }
-                  }
+        "fields": {
+          "parameters": [
+            {
+              "name": "name",
+              "description": "Name of the product to be created.",
+              "required": true
+            },
+            {
+              "name": "description",
+              "description": "Optional description of the product.",
+              "required": false
+            },
+            {
+              "name": "unit_amount",
+              "description": "Price in cents (e.g., 1000 for $10.00).",
+              "required": true
+            },
+            {
+              "name": "currency",
+              "description": "Three-letter ISO currency code in lowercase (e.g., 'usd').",
+              "required": true
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Successfully created product and price.",
+              "example": {
+                "product": {
+                  "id": "prod_ABC123",
+                  "name": "Test Product"
+                },
+                "price": {
+                  "id": "price_DEF456",
+                  "currency": "usd",
+                  "unit_amount": 1000
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid request parameters.",
+              "example": {
+                "error": {
+                  "message": "Currency must be a valid ISO currency code.",
+                  "type": "invalid_request_error"
                 }
               }
             }
           }
-        }
+        },
+        "additionalProperties": false
+      },
+      {
+        "id": "process_payments_refunds",
+        "title": "Process Payments and Handle Refunds",
+        "description": "Automates payment processing through checkout sessions and manages refunds when necessary.",
+        "actions": [
+          {
+            "id": "create_checkout_session",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_post_checkout_sessions"
+          },
+          {
+            "id": "issue_refund",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_post_refunds"
+          },
+          {
+            "id": "retrieve_balance",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_balance"
+          },
+          {
+            "id": "retrieve_charges",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_charges"
+          }
+        ],
+        "links": [
+          {
+            "source": {
+              "actionId": "create_checkout_session",
+              "fieldPath": "response.id"
+            },
+            "target": {
+              "actionId": "retrieve_charges",
+              "fieldPath": "parameters.session_id"
+            }
+          },
+          {
+            "source": {
+              "actionId": "retrieve_charges",
+              "fieldPath": "response.data.charge_id"
+            },
+            "target": {
+              "actionId": "issue_refund",
+              "fieldPath": "parameters.charge"
+            }
+          }
+        ],
+        "fields": {
+          "parameters": [
+            {
+              "name": "checkout_session_details",
+              "description": "Details required to create a checkout session.",
+              "required": true
+            },
+            {
+              "name": "refund_details",
+              "description": "Details required to issue a refund.",
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successfully processed payment and refund.",
+              "example": {
+                "checkout_session": {
+                  "id": "cs_test_a1b2c3d4e5",
+                  "amount_total": 5000,
+                  "currency": "usd"
+                },
+                "refund": {
+                  "id": "re_1A2B3C4D5E6F",
+                  "amount": 5000,
+                  "status": "succeeded"
+                },
+                "balance": {
+                  "available": [
+                    {
+                      "amount": 10000,
+                      "currency": "usd",
+                      "source_types": {
+                        "card": 10000
+                      }
+                    }
+                  ],
+                  "pending": []
+                },
+                "charges": [
+                  {
+                    "id": "ch_1A2B3C4D5E6F",
+                    "amount": 5000,
+                    "currency": "usd",
+                    "status": "succeeded"
+                  }
+                ]
+              }
+            },
+            "400": {
+              "description": "Invalid request parameters.",
+              "example": {
+                "error": {
+                  "message": "Invalid refund amount.",
+                  "type": "invalid_request_error"
+                }
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "id": "create_subscription_customer",
+        "title": "Create Subscription for Customer",
+        "description": "Automates the creation of a customer and subscribes them to a product or service.",
+        "actions": [
+          {
+            "id": "create_customer",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_post_customers"
+          },
+          {
+            "id": "create_subscription",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_post_subscriptions"
+          },
+          {
+            "id": "list_subscriptions",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_subscriptions"
+          },
+          {
+            "id": "retrieve_customer_details",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_customers_customer"
+          }
+        ],
+        "links": [
+          {
+            "source": {
+              "actionId": "create_customer",
+              "fieldPath": "response.id"
+            },
+            "target": {
+              "actionId": "create_subscription",
+              "fieldPath": "parameters.customer"
+            }
+          }
+        ],
+        "fields": {
+          "parameters": [
+            {
+              "name": "email",
+              "description": "The customer's email address.",
+              "required": false
+            },
+            {
+              "name": "name",
+              "description": "The customer's full name.",
+              "required": false
+            },
+            {
+              "name": "subscription_plan",
+              "description": "The plan to subscribe the customer to.",
+              "required": true
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Successfully created customer and subscription.",
+              "example": {
+                "customer": {
+                  "id": "cus_J5oXqKbxgZy6Nc",
+                  "email": "customer@example.com",
+                  "name": "John Doe",
+                  "created": 1616161616
+                },
+                "subscription": {
+                  "id": "sub_ABC123",
+                  "status": "active",
+                  "plan": {
+                    "id": "plan_DEF456",
+                    "amount": 1000,
+                    "currency": "usd"
+                  },
+                  "customer": "cus_J5oXqKbxgZy6Nc"
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid request parameters.",
+              "example": {
+                "error": {
+                  "message": "Invalid subscription plan.",
+                  "type": "invalid_request_error"
+                }
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "id": "cancel_subscription",
+        "title": "Cancel Subscription",
+        "description": "Automates the cancellation of a customer's subscription.",
+        "actions": [
+          {
+            "id": "cancel_subscription",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_post_subscriptions_cancel"
+          },
+          {
+            "id": "list_subscriptions",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_subscriptions"
+          },
+          {
+            "id": "retrieve_customer_details",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_customers_customer"
+          }
+        ],
+        "links": [
+          {
+            "source": {
+              "actionId": "cancel_subscription",
+              "fieldPath": "response.id"
+            },
+            "target": {
+              "actionId": "list_subscriptions",
+              "fieldPath": "parameters.customer"
+            }
+          }
+        ],
+        "fields": {
+          "parameters": [
+            {
+              "name": "subscription_id",
+              "description": "ID of the subscription to cancel.",
+              "required": true
+            },
+            {
+              "name": "customer_id",
+              "description": "ID of the customer whose subscription is to be canceled.",
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successfully canceled the subscription.",
+              "example": {
+                "subscription": {
+                  "id": "sub_ABC123",
+                  "status": "canceled",
+                  "canceled_at": 1616161616
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid subscription ID.",
+              "example": {
+                "error": {
+                  "message": "Subscription ID not found.",
+                  "type": "invalid_request_error"
+                }
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "id": "bulk_refund_product_customers",
+        "title": "Bulk Refund to All Customers of a Product",
+        "description": "Automates issuing refunds to all customers who have purchased a specific product.",
+        "actions": [
+          {
+            "id": "list_customers",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_customers"
+          },
+          {
+            "id": "retrieve_product_charges",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_charges"
+          },
+          {
+            "id": "issue_refund",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_post_refunds"
+          }
+        ],
+        "links": [
+          {
+            "source": {
+              "actionId": "list_customers",
+              "fieldPath": "response.data[].id"
+            },
+            "target": {
+              "actionId": "retrieve_product_charges",
+              "fieldPath": "parameters.customer"
+            }
+          },
+          {
+            "source": {
+              "actionId": "retrieve_product_charges",
+              "fieldPath": "response.data[].id"
+            },
+            "target": {
+              "actionId": "issue_refund",
+              "fieldPath": "parameters.charge"
+            }
+          }
+        ],
+        "fields": {
+          "parameters": [
+            {
+              "name": "product_id",
+              "description": "ID of the product for which refunds are to be issued.",
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successfully issued refunds to all applicable customers.",
+              "example": {
+                "refunds": [
+                  {
+                    "id": "re_1A2B3C4D5E6F",
+                    "amount": 1000,
+                    "status": "succeeded"
+                  },
+                  {
+                    "id": "re_1A2B3C4D5E6G",
+                    "amount": 2000,
+                    "status": "succeeded"
+                  }
+                ]
+              }
+            },
+            "400": {
+              "description": "Invalid product ID or refund parameters.",
+              "example": {
+                "error": {
+                  "message": "Invalid product ID.",
+                  "type": "invalid_request_error"
+                }
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "id": "update_product_descriptions",
+        "title": "Update Product Descriptions",
+        "description": "Automates updating product descriptions to enhance clarity based on product names.",
+        "actions": [
+          {
+            "id": "list_products",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_products"
+          },
+          {
+            "id": "update_product_description",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_post_products_id"
+          }
+        ],
+        "links": [
+          {
+            "source": {
+              "actionId": "list_products",
+              "fieldPath": "response.data[].id"
+            },
+            "target": {
+              "actionId": "update_product_description",
+              "fieldPath": "parameters.product_id"
+            }
+          }
+        ],
+        "fields": {
+          "parameters": [
+            {
+              "name": "description_template",
+              "description": "Template or logic for generating product descriptions from product names.",
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successfully updated product descriptions.",
+              "example": {
+                "updated_products": [
+                  {
+                    "id": "prod_ABC123",
+                    "description": "Enhanced description for Test Product."
+                  },
+                  {
+                    "id": "prod_DEF456",
+                    "description": "Enhanced description for Another Product."
+                  }
+                ]
+              }
+            },
+            "400": {
+              "description": "Invalid description template or product ID.",
+              "example": {
+                "error": {
+                  "message": "Invalid description template.",
+                  "type": "invalid_request_error"
+                }
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "id": "retrieve_account_balance",
+        "title": "Retrieve Account Balance",
+        "description": "Fetches and displays the current account balance, including available and pending funds.",
+        "actions": [
+          {
+            "id": "get_balance",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_balance"
+          },
+          {
+            "id": "display_balance",
+            "sourceId": "display_api",
+            "operationId": "display_balance_function"
+          }
+        ],
+        "links": [
+          {
+            "source": {
+              "actionId": "get_balance",
+              "fieldPath": "response"
+            },
+            "target": {
+              "actionId": "display_balance",
+              "fieldPath": "parameters.balance"
+            }
+          }
+        ],
+        "fields": {
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Successfully retrieved and displayed account balance.",
+              "example": {
+                "balance": {
+                  "available": [
+                    {
+                      "amount": 10000,
+                      "currency": "usd",
+                      "source_types": {
+                        "card": 10000
+                      }
+                    }
+                  ],
+                  "pending": []
+                }
+              }
+            },
+            "400": {
+              "description": "Failed to retrieve account balance.",
+              "example": {
+                "error": {
+                  "message": "Unable to fetch balance.",
+                  "type": "api_error"
+                }
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "id": "update_customer_payment_methods",
+        "title": "Update Customer Payment Methods",
+        "description": "Automates updating a customer's payment methods to ensure billing information is current.",
+        "actions": [
+          {
+            "id": "retrieve_customer",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_customers"
+          },
+          {
+            "id": "update_payment_method",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_post_payment_methods"
+          },
+          {
+            "id": "confirm_payment_method_update",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_post_customers_customer"
+          }
+        ],
+        "links": [
+          {
+            "source": {
+              "actionId": "retrieve_customer",
+              "fieldPath": "response.data[].id"
+            },
+            "target": {
+              "actionId": "update_payment_method",
+              "fieldPath": "parameters.customer_id"
+            }
+          },
+          {
+            "source": {
+              "actionId": "update_payment_method",
+              "fieldPath": "response.id"
+            },
+            "target": {
+              "actionId": "confirm_payment_method_update",
+              "fieldPath": "parameters.payment_method_id"
+            }
+          }
+        ],
+        "fields": {
+          "parameters": [
+            {
+              "name": "customer_id",
+              "description": "ID of the customer whose payment method is to be updated.",
+              "required": true
+            },
+            {
+              "name": "payment_method_details",
+              "description": "Details of the new payment method.",
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successfully updated customer's payment methods.",
+              "example": {
+                "customer": {
+                  "id": "cus_J5oXqKbxgZy6Nc",
+                  "payment_methods": [
+                    {
+                      "id": "pm_1A2B3C4D5E6F",
+                      "type": "card",
+                      "card": {
+                        "brand": "visa",
+                        "last4": "4242"
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid payment method details or customer ID.",
+              "example": {
+                "error": {
+                  "message": "Invalid payment method details.",
+                  "type": "invalid_request_error"
+                }
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "id": "create_manage_refunds",
+        "title": "Create and Manage Refunds",
+        "description": "Automates issuing refunds for transactions and reviews all issued refunds.",
+        "actions": [
+          {
+            "id": "retrieve_charge",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_charges"
+          },
+          {
+            "id": "issue_refund",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_post_refunds"
+          },
+          {
+            "id": "list_refunds",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_refunds"
+          }
+        ],
+        "links": [
+          {
+            "source": {
+              "actionId": "retrieve_charge",
+              "fieldPath": "response.data[].id"
+            },
+            "target": {
+              "actionId": "issue_refund",
+              "fieldPath": "parameters.charge"
+            }
+          }
+        ],
+        "fields": {
+          "parameters": [
+            {
+              "name": "charge_id",
+              "description": "ID of the charge to refund.",
+              "required": true
+            },
+            {
+              "name": "refund_amount",
+              "description": "Amount to refund (optional).",
+              "required": false
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successfully issued refund.",
+              "example": {
+                "refund": {
+                  "id": "re_1A2B3C4D5E6F",
+                  "amount": 1000,
+                  "status": "succeeded"
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid refund amount or charge ID.",
+              "example": {
+                "error": {
+                  "message": "Charge ID not found.",
+                  "type": "invalid_request_error"
+                }
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "id": "create_manage_checkout_sessions",
+        "title": "Create and Manage Checkout Sessions",
+        "description": "Automates the creation and management of Checkout Sessions for seamless payment processes.",
+        "actions": [
+          {
+            "id": "create_checkout_session",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_post_checkout_sessions"
+          },
+          {
+            "id": "list_checkout_sessions",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_checkout_sessions"
+          },
+          {
+            "id": "update_checkout_session",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_post_checkout_sessions_id"
+          }
+        ],
+        "links": [
+          {
+            "source": {
+              "actionId": "create_checkout_session",
+              "fieldPath": "response.id"
+            },
+            "target": {
+              "actionId": "update_checkout_session",
+              "fieldPath": "parameters.session_id"
+            }
+          }
+        ],
+        "fields": {
+          "parameters": [
+            {
+              "name": "session_details",
+              "description": "Details required to create or update the checkout session.",
+              "required": true
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Successfully created checkout session.",
+              "example": {
+                "checkout_session": {
+                  "id": "cs_test_a1b2c3d4e5",
+                  "amount_total": 5000,
+                  "currency": "usd",
+                  "status": "open"
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid session details.",
+              "example": {
+                "error": {
+                  "message": "Missing required fields.",
+                  "type": "invalid_request_error"
+                }
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "id": "retrieve_update_subscriptions",
+        "title": "Retrieve and Update Customer Subscriptions",
+        "description": "Automates retrieving and updating customer subscriptions for efficient management.",
+        "actions": [
+          {
+            "id": "list_subscriptions",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_subscriptions"
+          },
+          {
+            "id": "update_subscription",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_post_subscriptions_update"
+          },
+          {
+            "id": "confirm_subscription_update",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_subscriptions"
+          }
+        ],
+        "links": [
+          {
+            "source": {
+              "actionId": "list_subscriptions",
+              "fieldPath": "response.data[].id"
+            },
+            "target": {
+              "actionId": "update_subscription",
+              "fieldPath": "parameters.subscription_id"
+            }
+          }
+        ],
+        "fields": {
+          "parameters": [
+            {
+              "name": "customer_id",
+              "description": "ID of the customer whose subscriptions are to be retrieved and updated.",
+              "required": true
+            },
+            {
+              "name": "subscription_update_details",
+              "description": "Details for updating the subscription (e.g., plan change, quantity adjustment).",
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successfully retrieved and updated subscriptions.",
+              "example": {
+                "subscriptions": [
+                  {
+                    "id": "sub_ABC123",
+                    "status": "active",
+                    "plan": {
+                      "id": "plan_DEF456",
+                      "amount": 1500,
+                      "currency": "usd"
+                    }
+                  }
+                ]
+              }
+            },
+            "400": {
+              "description": "Invalid subscription update details.",
+              "example": {
+                "error": {
+                  "message": "Invalid plan ID.",
+                  "type": "invalid_request_error"
+                }
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "id": "manage_billing_portal_sessions",
+        "title": "Create and Manage Billing Portal Sessions",
+        "description": "Automates creating billing portal sessions and managing portal configurations.",
+        "actions": [
+          {
+            "id": "create_billing_portal_session",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_post_billing_portal_sessions"
+          },
+          {
+            "id": "list_billing_portal_configurations",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_billing_portal_configurations"
+          },
+          {
+            "id": "create_billing_portal_configuration",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_post_billing_portal_configurations"
+          }
+        ],
+        "links": [
+          {
+            "source": {
+              "actionId": "create_billing_portal_session",
+              "fieldPath": "response.id"
+            },
+            "target": {
+              "actionId": "list_billing_portal_configurations",
+              "fieldPath": "parameters.session_id"
+            }
+          }
+        ],
+        "fields": {
+          "parameters": [
+            {
+              "name": "session_details",
+              "description": "Details required to create a billing portal session.",
+              "required": true
+            },
+            {
+              "name": "configuration_details",
+              "description": "Details required to create a billing portal configuration.",
+              "required": true
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Successfully created billing portal session and configuration.",
+              "example": {
+                "billing_portal_session": {
+                  "id": "bps_test_a1b2c3d4e5",
+                  "url": "https://billing.stripe.com/session_test_a1b2c3d4e5"
+                },
+                "billing_portal_configuration": {
+                  "id": "bpc_TEST123",
+                  "features": {
+                    "customer_update": {
+                      "enabled": true
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid session or configuration details.",
+              "example": {
+                "error": {
+                  "message": "Invalid session details.",
+                  "type": "invalid_request_error"
+                }
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "id": "search_retrieve_customers",
+        "title": "Search and Retrieve Customer Information",
+        "description": "Automates searching for customers and retrieving their detailed information.",
+        "actions": [
+          {
+            "id": "search_customers",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_customers_search"
+          },
+          {
+            "id": "retrieve_customer_details",
+            "sourceId": "stripe_api",
+            "operationId": "stripe_get_customers_customer"
+          }
+        ],
+        "links": [
+          {
+            "source": {
+              "actionId": "search_customers",
+              "fieldPath": "response.data[].id"
+            },
+            "target": {
+              "actionId": "retrieve_customer_details",
+              "fieldPath": "parameters.customer_id"
+            }
+          }
+        ],
+        "fields": {
+          "parameters": [
+            {
+              "name": "search_query",
+              "description": "Query string to search for customers.",
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successfully searched and retrieved customer information.",
+              "example": {
+                "customers": [
+                  {
+                    "id": "cus_J5oXqKbxgZy6Nc",
+                    "email": "alice@example.com",
+                    "name": "Alice Smith",
+                    "created": 1616161616
+                  },
+                  {
+                    "id": "cus_J5oYqKbyhXy7Nd",
+                    "email": "bob@example.com",
+                    "name": "Bob Johnson",
+                    "created": 1616161626
+                  }
+                ]
+              }
+            },
+            "400": {
+              "description": "Invalid search query.",
+              "example": {
+                "error": {
+                  "message": "Invalid search parameters.",
+                  "type": "invalid_request_error"
+                }
+              }
+            }
+          }
+        },
+        "additionalProperties": false
       }
-    }
-  ]
-}
+    ],
+    "additionalProperties": false
+  }
