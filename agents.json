@@ -53,7 +53,7 @@
           {
             "source": {
               "actionId": "create_product",
-              "fieldPath": "response.id"
+              "fieldPath": "responses.id"
             },
             "target": {
               "actionId": "create_price",
@@ -63,7 +63,7 @@
           {
             "source": {
               "actionId": "create_price",
-              "fieldPath": "response.id"
+              "fieldPath": "responses.id"
             },
             "target": {
               "actionId": "update_price",
@@ -152,7 +152,7 @@
           {
             "source": {
               "actionId": "create_checkout_session",
-              "fieldPath": "response.id"
+              "fieldPath": "responses.id"
             },
             "target": {
               "actionId": "retrieve_charges",
@@ -162,7 +162,7 @@
           {
             "source": {
               "actionId": "retrieve_charges",
-              "fieldPath": "response.data.charge_id"
+              "fieldPath": "responses.data.charge_id"
             },
             "target": {
               "actionId": "issue_refund",
@@ -262,7 +262,7 @@
           {
             "source": {
               "actionId": "create_customer",
-              "fieldPath": "response.id"
+              "fieldPath": "responses.id"
             },
             "target": {
               "actionId": "create_subscription",
@@ -348,7 +348,7 @@
           {
             "source": {
               "actionId": "cancel_subscription",
-              "fieldPath": "response.id"
+              "fieldPath": "responses.id"
             },
             "target": {
               "actionId": "list_subscriptions",
@@ -418,7 +418,7 @@
           {
             "source": {
               "actionId": "list_customers",
-              "fieldPath": "response.data[].id"
+              "fieldPath": "responses.data.id"
             },
             "target": {
               "actionId": "retrieve_product_charges",
@@ -428,7 +428,7 @@
           {
             "source": {
               "actionId": "retrieve_product_charges",
-              "fieldPath": "response.data[].id"
+              "fieldPath": "responses.data.id"
             },
             "target": {
               "actionId": "issue_refund",
@@ -495,7 +495,7 @@
           {
             "source": {
               "actionId": "list_products",
-              "fieldPath": "response.data[].id"
+              "fieldPath": "responses.data.id"
             },
             "target": {
               "actionId": "update_product_description",
@@ -560,7 +560,7 @@
           {
             "source": {
               "actionId": "get_balance",
-              "fieldPath": "response"
+              "fieldPath": "responses"
             },
             "target": {
               "actionId": "display_balance",
@@ -626,7 +626,7 @@
           {
             "source": {
               "actionId": "retrieve_customer",
-              "fieldPath": "response.data[].id"
+              "fieldPath": "responses.data.id"
             },
             "target": {
               "actionId": "update_payment_method",
@@ -636,7 +636,7 @@
           {
             "source": {
               "actionId": "update_payment_method",
-              "fieldPath": "response.id"
+              "fieldPath": "responses.id"
             },
             "target": {
               "actionId": "confirm_payment_method_update",
@@ -714,7 +714,7 @@
           {
             "source": {
               "actionId": "retrieve_charge",
-              "fieldPath": "response.data[].id"
+              "fieldPath": "responses.data.id"
             },
             "target": {
               "actionId": "issue_refund",
@@ -784,7 +784,7 @@
           {
             "source": {
               "actionId": "create_checkout_session",
-              "fieldPath": "response.id"
+              "fieldPath": "responses.id"
             },
             "target": {
               "actionId": "update_checkout_session",
@@ -850,7 +850,7 @@
           {
             "source": {
               "actionId": "list_subscriptions",
-              "fieldPath": "response.data[].id"
+              "fieldPath": "responses.data.id"
             },
             "target": {
               "actionId": "update_subscription",
@@ -926,7 +926,7 @@
           {
             "source": {
               "actionId": "create_billing_portal_session",
-              "fieldPath": "response.id"
+              "fieldPath": "responses.id"
             },
             "target": {
               "actionId": "list_billing_portal_configurations",
@@ -998,7 +998,7 @@
           {
             "source": {
               "actionId": "search_customers",
-              "fieldPath": "response.data[].id"
+              "fieldPath": "responses.data.id"
             },
             "target": {
               "actionId": "retrieve_customer_details",
