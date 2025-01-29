@@ -52,12 +52,52 @@
       "links": [
         {
           "origin": {
+            "actionId": "manage_products_prices",
+            "fieldPath": "parameters.name"
+          },
+          "target": {
+            "actionId": "create_product",
+            "fieldPath": "parameters.name"
+          }
+        },
+        {
+          "origin": {
+            "actionId": "manage_products_prices",
+            "fieldPath": "parameters.description"
+          },
+          "target": {
+            "actionId": "create_product",
+            "fieldPath": "parameters.description"
+          }
+        },
+        {
+          "origin": {
             "actionId": "create_product",
             "fieldPath": "responses.id"
           },
           "target": {
             "actionId": "create_price",
             "fieldPath": "parameters.product"
+          }
+        },
+        {
+          "origin": {
+            "actionId": "manage_products_prices",
+            "fieldPath": "parameters.unit_amount"
+          },
+          "target": {
+            "actionId": "create_price",
+            "fieldPath": "parameters.unit_amount"
+          }
+        },
+        {
+          "origin": {
+            "actionId": "manage_products_prices",
+            "fieldPath": "parameters.currency"
+          },
+          "target": {
+            "actionId": "create_price",
+            "fieldPath": "parameters.currency"
           }
         },
         {
