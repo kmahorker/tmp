@@ -7,7 +7,7 @@
     },
     "sources": [
       {
-        "id": "stripe_api",
+        "id": "stripe",
         "path": "https://raw.githubusercontent.com/kmahorker/tmp/refs/heads/master/stripe_openapi.yaml"
       }
     ],
@@ -20,32 +20,32 @@
         "actions": [
           {
             "id": "create_product",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_post_products"
           },
           {
             "id": "create_price",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_post_prices"
           },
           {
             "id": "list_products",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_products"
           },
           {
             "id": "list_prices",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_prices"
           },
           {
             "id": "update_price",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_post_prices_price"
           },
           {
             "id": "retrieve_price",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_prices_price"
           }
         ],
@@ -129,22 +129,22 @@
         "actions": [
           {
             "id": "create_checkout_session",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_post_checkout_sessions"
           },
           {
             "id": "issue_refund",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_post_refunds"
           },
           {
             "id": "retrieve_balance",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_balance"
           },
           {
             "id": "retrieve_charges",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_charges"
           }
         ],
@@ -239,22 +239,22 @@
         "actions": [
           {
             "id": "create_customer",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_post_customers"
           },
           {
             "id": "create_subscription",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_post_subscriptions"
           },
           {
             "id": "list_subscriptions",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_subscriptions"
           },
           {
             "id": "retrieve_customer_details",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_customers_customer"
           }
         ],
@@ -330,17 +330,17 @@
         "actions": [
           {
             "id": "cancel_subscription",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_post_subscriptions_cancel"
           },
           {
             "id": "list_subscriptions",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_subscriptions"
           },
           {
             "id": "retrieve_customer_details",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_customers_customer"
           }
         ],
@@ -400,17 +400,17 @@
         "actions": [
           {
             "id": "list_customers",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_customers"
           },
           {
             "id": "retrieve_product_charges",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_charges"
           },
           {
             "id": "issue_refund",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_post_refunds"
           }
         ],
@@ -482,12 +482,12 @@
         "actions": [
           {
             "id": "list_products",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_products"
           },
           {
             "id": "update_product_description",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_post_products_id"
           }
         ],
@@ -547,7 +547,7 @@
         "actions": [
           {
             "id": "get_balance",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_balance"
           },
           {
@@ -608,17 +608,17 @@
         "actions": [
           {
             "id": "retrieve_customer",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_customers"
           },
           {
             "id": "update_payment_method",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_post_payment_methods"
           },
           {
             "id": "confirm_payment_method_update",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_post_customers_customer"
           }
         ],
@@ -696,17 +696,17 @@
         "actions": [
           {
             "id": "retrieve_charge",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_charges"
           },
           {
             "id": "issue_refund",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_post_refunds"
           },
           {
             "id": "list_refunds",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_refunds"
           }
         ],
@@ -766,17 +766,17 @@
         "actions": [
           {
             "id": "create_checkout_session",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_post_checkout_sessions"
           },
           {
             "id": "list_checkout_sessions",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_checkout_sessions"
           },
           {
             "id": "update_checkout_session",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_post_checkout_sessions_id"
           }
         ],
@@ -832,17 +832,17 @@
         "actions": [
           {
             "id": "list_subscriptions",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_subscriptions"
           },
           {
             "id": "update_subscription",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_post_subscriptions_update"
           },
           {
             "id": "confirm_subscription_update",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_subscriptions"
           }
         ],
@@ -908,17 +908,17 @@
         "actions": [
           {
             "id": "create_billing_portal_session",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_post_billing_portal_sessions"
           },
           {
             "id": "list_billing_portal_configurations",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_billing_portal_configurations"
           },
           {
             "id": "create_billing_portal_configuration",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_post_billing_portal_configurations"
           }
         ],
@@ -985,12 +985,12 @@
         "actions": [
           {
             "id": "search_customers",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_customers_search"
           },
           {
             "id": "retrieve_customer_details",
-            "sourceId": "stripe_api",
+            "sourceId": "stripe",
             "operationId": "stripe_get_customers_customer"
           }
         ],
