@@ -1,0 +1,651 @@
+{
+    "agents": "1.0.0",
+    "info": {
+      "title": "Stripe Integration",
+      "version": "1.0.0",
+      "description": "Demonstrates how to use Stripe endpoints with an AI agent."
+    },
+    "sources": [
+      {
+        "id": "stripe",
+        "path": "wildcard/python/packages/integrations/stripe/map.py"
+      }
+    ],
+    "overrides": [],
+    "chains": [
+      {
+        "id": "stripe-post-customers",
+        "title": "Create Customer (POST)",
+        "description": "Creates a new customer object in Stripe.",
+        "actions": [
+          {
+            "id": "action-stripe-post-customers",
+            "sourceId": "stripe",
+            "operationId": "stripe_post_customers"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [
+            {
+              "name": "email",
+              "description": "The customer's email address.",
+              "required": false
+            },
+            {
+              "name": "name",
+              "description": "The customer's full name.",
+              "required": false
+            }
+          ],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+      {
+        "id": "stripe-get-customers",
+        "title": "List Customers (GET)",
+        "description": "Retrieves a list of all customers from Stripe.",
+        "actions": [
+          {
+            "id": "action-stripe-get-customers",
+            "sourceId": "stripe",
+            "operationId": "stripe_get_customers"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+      {
+        "id": "stripe-post-products",
+        "title": "Create Product (POST)",
+        "description": "Creates a new product object in Stripe.",
+        "actions": [
+          {
+            "id": "action-stripe-post-products",
+            "sourceId": "stripe",
+            "operationId": "stripe_post_products"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [
+            {
+              "name": "name",
+              "description": "The product's name, meant to be displayed to the customer.",
+              "required": true
+            },
+            {
+              "name": "description",
+              "description": "The product's description, meant to be displayed to the customer.",
+              "required": false
+            }
+          ],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+      {
+        "id": "stripe-get-products",
+        "title": "List Products (GET)",
+        "description": "Retrieves a list of all products from Stripe.",
+        "actions": [
+          {
+            "id": "action-stripe-get-products",
+            "sourceId": "stripe",
+            "operationId": "stripe_get_products"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+      {
+        "id": "stripe-post-prices",
+        "title": "Create Price (POST)",
+        "description": "Creates a new price object in Stripe.",
+        "actions": [
+          {
+            "id": "action-stripe-post-prices",
+            "sourceId": "stripe",
+            "operationId": "stripe_post_prices"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [
+            {
+              "name": "unit_amount",
+              "description": "Amount (in cents) to be charged, e.g. 1000 for $10.00.",
+              "required": true
+            },
+            {
+              "name": "currency",
+              "description": "Three-letter ISO currency code, in lowercase. Must be a supported currency.",
+              "required": true
+            },
+            {
+              "name": "product",
+              "description": "Product ID to create a price for.",
+              "required": true
+            }
+          ],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+      {
+        "id": "stripe-get-prices",
+        "title": "List Prices (GET)",
+        "description": "Retrieves a list of all prices from Stripe.",
+        "actions": [
+          {
+            "id": "action-stripe-get-prices",
+            "sourceId": "stripe",
+            "operationId": "stripe_get_prices"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+      {
+        "id": "stripe-post-payment-links",
+        "title": "Create Payment Link (POST)",
+        "description": "Create a payment link object in Stripe.",
+        "actions": [
+          {
+            "id": "action-stripe-post-payment-links",
+            "sourceId": "stripe",
+            "operationId": "stripe_post_payment_links"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [
+            {
+              "name": "line_items",
+              "description": "A list of line items the customer is purchasing.",
+              "required": true
+            }
+          ],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+      {
+        "id": "stripe-post-invoices",
+        "title": "Create Invoice (POST)",
+        "description": "Creates a new invoice object in Stripe.",
+        "actions": [
+          {
+            "id": "action-stripe-post-invoices",
+            "sourceId": "stripe",
+            "operationId": "stripe_post_invoices"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [
+            {
+              "name": "customer",
+              "description": "The ID of the customer who will be billed.",
+              "required": true
+            }
+          ],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+      {
+        "id": "stripe-post-invoiceitems",
+        "title": "Create Invoice Item (POST)",
+        "description": "Creates an invoice item and adds it to an existing invoice.",
+        "actions": [
+          {
+            "id": "action-stripe-post-invoiceitems",
+            "sourceId": "stripe",
+            "operationId": "stripe_post_invoiceitems"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [
+            {
+              "name": "customer",
+              "description": "The ID of the customer who will be billed.",
+              "required": true
+            },
+            {
+              "name": "amount",
+              "description": "The integer amount in cents of the charge to be applied.",
+              "required": true
+            },
+            {
+              "name": "currency",
+              "description": "Three-letter ISO currency code, in lowercase. Must be a supported currency.",
+              "required": true
+            }
+          ],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+      {
+        "id": "stripe-post-invoices-invoice-finalize",
+        "title": "Finalize Invoice (POST)",
+        "description": "Finalize the specified draft invoice.",
+        "actions": [
+          {
+            "id": "action-stripe-post-invoices-invoice-finalize",
+            "sourceId": "stripe",
+            "operationId": "stripe_post_invoices_invoice_finalize"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [
+            {
+              "name": "invoice",
+              "description": "ID of the invoice you want to finalize.",
+              "required": true
+            }
+          ],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+      {
+        "id": "stripe-get-balance",
+        "title": "Retrieve Balance (GET)",
+        "description": "Retrieves the current account balance for your Stripe account.",
+        "actions": [
+          {
+            "id": "action-stripe-get-balance",
+            "sourceId": "stripe",
+            "operationId": "stripe_get_balance"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+      {
+        "id": "stripe-post-refunds",
+        "title": "Create Refund (POST)",
+        "description": "Creates a new refund for a previously created charge.",
+        "actions": [
+          {
+            "id": "action-stripe-post-refunds",
+            "sourceId": "stripe",
+            "operationId": "stripe_post_refunds"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [
+            {
+              "name": "charge",
+              "description": "Charge ID to refund.",
+              "required": true
+            },
+            {
+              "name": "amount",
+              "description": "A positive integer in cents representing how much to refund.",
+              "required": false
+            }
+          ],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+      {
+        "id": "stripe-post-products-id",
+        "title": "Update Product (POST)",
+        "description": "Updates the specific Stripe product by ID.",
+        "actions": [
+          {
+            "id": "action-stripe-post-products-id",
+            "sourceId": "stripe",
+            "operationId": "stripe_post_products_id"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [
+            {
+              "name": "id",
+              "description": "The ID of the product to update.",
+              "required": true
+            },
+            {
+              "name": "name",
+              "description": "The new name for the product.",
+              "required": false
+            }
+          ],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+      {
+        "id": "stripe-get-products-id",
+        "title": "Retrieve Product by ID (GET)",
+        "description": "Retrieves the Stripe product object by ID.",
+        "actions": [
+          {
+            "id": "action-stripe-get-products-id",
+            "sourceId": "stripe",
+            "operationId": "stripe_get_products_id"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [
+            {
+              "name": "id",
+              "description": "The ID of the product to retrieve.",
+              "required": true
+            }
+          ],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+      {
+        "id": "stripe-post-checkout-sessions",
+        "title": "Create Checkout Session (POST)",
+        "description": "Create a new checkout session in Stripe.",
+        "actions": [
+          {
+            "id": "action-stripe-post-checkout-sessions",
+            "sourceId": "stripe",
+            "operationId": "stripe_post_checkout_sessions"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [
+            {
+              "name": "line_items",
+              "description": "A list of items the customer is buying.",
+              "required": true
+            },
+            {
+              "name": "mode",
+              "description": "The mode of the Checkout Session (payment, subscription, or setup).",
+              "required": true
+            },
+            {
+              "name": "success_url",
+              "description": "URL to which Stripe should redirect when payment completes.",
+              "required": true
+            },
+            {
+              "name": "cancel_url",
+              "description": "URL to which Stripe should redirect when payment is canceled.",
+              "required": true
+            }
+          ],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+      {
+        "id": "stripe-post-billing-portal-sessions",
+        "title": "Create Billing Portal Session (POST)",
+        "description": "Creates a session of the customer portal.",
+        "actions": [
+          {
+            "id": "action-stripe-post-billing-portal-sessions",
+            "sourceId": "stripe",
+            "operationId": "stripe_post_billing_portal_sessions"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [
+            {
+              "name": "customer",
+              "description": "ID of an existing customer.",
+              "required": true
+            },
+            {
+              "name": "return_url",
+              "description": "The URL to which the customer will be redirected when they exit the portal.",
+              "required": true
+            }
+          ],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+      {
+        "id": "stripe-get-prices-price",
+        "title": "Retrieve Price by ID (GET)",
+        "description": "Retrieves a specific price object by ID.",
+        "actions": [
+          {
+            "id": "action-stripe-get-prices-price",
+            "sourceId": "stripe",
+            "operationId": "stripe_get_prices_price"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [
+            {
+              "name": "price",
+              "description": "The ID of the price to retrieve.",
+              "required": true
+            }
+          ],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+      {
+        "id": "stripe-post-prices-price",
+        "title": "Update Price (POST)",
+        "description": "Updates the specified price object by ID.",
+        "actions": [
+          {
+            "id": "action-stripe-post-prices-price",
+            "sourceId": "stripe",
+            "operationId": "stripe_post_prices_price"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [
+            {
+              "name": "price",
+              "description": "The ID of the price to update.",
+              "required": true
+            },
+            {
+              "name": "nickname",
+              "description": "A brief nickname for the price for the customer's convenience.",
+              "required": false
+            }
+          ],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+      {
+        "id": "stripe-get-customers-search",
+        "title": "Search Customers (GET)",
+        "description": "Search for customers using the provided query string.",
+        "actions": [
+          {
+            "id": "action-stripe-get-customers-search",
+            "sourceId": "stripe",
+            "operationId": "stripe_get_customers_search"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [
+            {
+              "name": "query",
+              "description": "The search query string, e.g. email:'test@example.com'.",
+              "required": true
+            }
+          ],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+      {
+        "id": "stripe-get-customers-customer",
+        "title": "Retrieve Customer by ID (GET)",
+        "description": "Retrieves the Stripe customer object by customer ID.",
+        "actions": [
+          {
+            "id": "action-stripe-get-customers-customer",
+            "sourceId": "stripe",
+            "operationId": "stripe_get_customers_customer"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [
+            {
+              "name": "customer",
+              "description": "The ID of the customer to retrieve.",
+              "required": true
+            }
+          ],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+      {
+        "id": "stripe-get-billing-portal-configurations",
+        "title": "List Billing Portal Configurations (GET)",
+        "description": "Retrieves a list of all billing portal configurations.",
+        "actions": [
+          {
+            "id": "action-stripe-get-billing-portal-configurations",
+            "sourceId": "stripe",
+            "operationId": "stripe_get_billing_portal_configurations"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+      {
+        "id": "stripe-post-billing-portal-configurations",
+        "title": "Create Billing Portal Configuration (POST)",
+        "description": "Creates a new configuration that defines the functionality of the customer portal.",
+        "actions": [
+          {
+            "id": "action-stripe-post-billing-portal-configurations",
+            "sourceId": "stripe",
+            "operationId": "stripe_post_billing_portal_configurations"
+          }
+        ],
+        "mappings": [],
+        "fields": {
+          "parameters": [
+            {
+              "name": "business_profile",
+              "description": "Information about the business for the portal configuration.",
+              "required": false
+            }
+          ],
+          "requestBody": {},
+          "responses": {}
+        }
+      },
+  
+      {
+        "id": "stripe-create-product-and-price",
+        "title": "Create Product and Price",
+        "description": "Use this chain when you need to create both a product and its associated price in one operation. The chain will first create the product, then automatically use the new product's ID to create a price for it.",
+        "actions": [
+          {
+            "id": "action-create-product",
+            "sourceId": "stripe",
+            "operationId": "stripe_post_products"
+          },
+          {
+            "id": "action-create-price",
+            "sourceId": "stripe",
+            "operationId": "stripe_post_prices"
+          }
+        ],
+        "mappings": [
+          {
+            "origin": {
+              "actionId": "action-create-product",
+              "fieldPath": "response.id"
+            },
+            "target": {
+              "actionId": "action-create-price",
+              "fieldPath": "parameters.product"
+            }
+          }
+        ],
+        "fields": {
+          "parameters": [
+            {
+              "name": "name",
+              "description": "Specify the product's name that will be shown to customers. Example: 'Premium Subscription' or 'Basic Plan'.",
+              "required": true
+            },
+            {
+              "name": "description",
+              "description": "Optionally provide additional details about the product. Example: 'Monthly subscription with unlimited access'.",
+              "required": false
+            },
+            {
+              "name": "unit_amount",
+              "description": "Specify the price in cents (smallest currency unit). For example, use 1000 for $10.00 USD, or 2500 for £25.00 GBP.",
+              "required": true
+            },
+            {
+              "name": "currency",
+              "description": "Specify the three-letter ISO currency code in lowercase. Examples: 'usd', 'eur', 'gbp', 'jpy'.",
+              "required": true
+            }
+          ],
+          "requestBody": {},
+          "responses": {
+            "200": {
+              "description": "Successfully created product and price.",
+              "example": {
+                "product": {
+                  "id": "prod_ABC123",
+                  "name": "Test Product"
+                },
+                "price": {
+                  "id": "price_DEF456",
+                  "currency": "usd",
+                  "unit_amount": 1000
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
