@@ -73,7 +73,7 @@
         {
           "origin": {
             "actionId": "create_product",
-            "fieldPath": "responses.id"
+            "fieldPath": "responses.success.id"
           },
           "target": {
             "actionId": "create_price",
@@ -103,7 +103,7 @@
         {
           "origin": {
             "actionId": "create_price",
-            "fieldPath": "responses.id"
+            "fieldPath": "responses.success.id"
           },
           "target": {
             "actionId": "update_price",
@@ -404,6 +404,137 @@
                 "status": "succeeded"
               }
             ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "id": "create_product_price",
+      "title": "Create Product with Price",
+      "description": "Creates a new product and associates a price with it in Stripe.",
+      "actions": [
+        {
+          "id": "create_product",
+          "sourceId": "stripe",
+          "operationId": "stripe_post_products"
+        },
+        {
+          "id": "create_price",
+          "sourceId": "stripe",
+          "operationId": "stripe_post_prices"
+        }
+      ],
+      "links": [
+        {
+          "origin": {
+            "actionId": "create_product_price",
+            "fieldPath": "parameters.name"
+          },
+          "target": {
+            "actionId": "create_product",
+            "fieldPath": "parameters.name"
+          }
+        },
+        {
+          "origin": {
+            "actionId": "create_product_price",
+            "fieldPath": "parameters.description"
+          },
+          "target": {
+            "actionId": "create_product",
+            "fieldPath": "parameters.description"
+          }
+        },
+        {
+          "origin": {
+            "actionId": "create_product",
+            "fieldPath": "responses.success.id"
+          },
+          "target": {
+            "actionId": "create_price",
+            "fieldPath": "parameters.product"
+          }
+        },
+        {
+          "origin": {
+            "actionId": "create_product_price",
+            "fieldPath": "parameters.unit_amount"
+          },
+          "target": {
+            "actionId": "create_price",
+            "fieldPath": "parameters.unit_amount"
+          }
+        },
+        {
+          "origin": {
+            "actionId": "create_product_price",
+            "fieldPath": "parameters.currency"
+          },
+          "target": {
+            "actionId": "create_price",
+            "fieldPath": "parameters.currency"
+          }
+        }
+      ],
+      "fields": {
+        "parameters": [
+          {
+            "name": "name",
+            "type": "string",
+            "description": "Name of the product to be created",
+            "required": true
+          },
+          {
+            "name": "description",
+            "type": "string",
+            "description": "Description of the product",
+            "required": false
+          },
+          {
+            "name": "unit_amount",
+            "type": "integer",
+            "description": "Price amount in cents (e.g., 2000 for $20.00)",
+            "required": true
+          },
+          {
+            "name": "currency",
+            "type": "string",
+            "description": "Three-letter currency code (e.g., 'usd')",
+            "required": true
+          }
+        ],
+        "responses": {
+          "success": {
+            "type": "object",
+            "properties": {
+              "product": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string" },
+                  "name": { "type": "string" }
+                }
+              },
+              "price": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string" },
+                  "unit_amount": { "type": "integer" },
+                  "currency": { "type": "string" }
+                }
+              }
+            }
+          },
+          "example": {
+            "product": {
+              "id": "prod_ABC123",
+              "name": "Sample Product"
+            },
+            "price": {
+              "id": "price_XYZ789",
+              "unit_amount": 2000,
+              "currency": "usd"
+            }
           }
         }
       },

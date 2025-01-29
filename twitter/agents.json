@@ -1,0 +1,697 @@
+{
+    "agentsJson": "1.0.0",
+    "info": {
+      "title": "Twitter API Agent Flows",
+      "version": "1.0.0",
+      "description": "A set of flows illustrating how to chain operations in the Twitter API v2. Each flow references operationIds from the provided Twitter endpoints. Note that authentication (e.g., OAuth or Bearer token) is handled separately, and thus not shown as flow parameters here."
+    },
+    "sources": [
+      {
+        "id": "twitter",
+        "path": "https://raw.githubusercontent.com/kmahorker/tmp/refs/heads/master/twitter/openapi.yaml"
+      }
+    ],
+    "flows": [
+      {
+        "id": "dm_conversation_flow",
+        "title": "DM Conversation & Message Flow",
+        "description": "Creates a DM conversation, then sends a DM to a user via conversation or participant ID.",
+        "actions": [
+          {
+            "id": "create_dm_conversation",
+            "sourceId": "twitter",
+            "operationId": "twitter_dm_conversation_id_create"
+          },
+          {
+            "id": "send_dm_to_user",
+            "sourceId": "twitter",
+            "operationId": "twitter_dm_conversations_with_participant_id_messages_post"
+          }
+        ],
+        "links": [
+          {
+            "origin": {
+              "actionId": "dm_conversation_flow",
+              "fieldPath": "requestBody.firstMessage.content.application/json.text"
+            },
+            "target": {
+              "actionId": "create_dm_conversation",
+              "fieldPath": "requestBody.content.application/json.text"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "create_dm_conversation",
+              "fieldPath": "responseBody.data.dm_conversation_id"
+            },
+            "target": {
+              "actionId": "send_dm_to_user",
+              "fieldPath": "parameters.0.value"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "dm_conversation_flow",
+              "fieldPath": "requestBody.dmToUser.content.application/json.text"
+            },
+            "target": {
+              "actionId": "send_dm_to_user",
+              "fieldPath": "requestBody.content.application/json.text"
+            }
+          }
+        ],
+        "fields": {
+          "parameters": [],
+          "requestBody": {
+            "required": false,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Structure for DM text in the conversation creation and the subsequent message."
+                },
+                "example": {
+                  "firstMessage": {
+                    "text": "Hello, I'd like to start a DM conversation!"
+                  },
+                  "dmToUser": {
+                    "text": "Hi again—this is my second message."
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "success": {
+              "description": "DM conversation created and message sent successfully."
+            }
+          }
+        }
+      },
+      {
+        "id": "compliance_job_flow",
+        "title": "Batch Compliance Job Flow",
+        "description": "Creates a compliance job and shows how to list and retrieve details of compliance jobs.",
+        "actions": [
+          {
+            "id": "create_compliance_job",
+            "sourceId": "twitter",
+            "operationId": "twitter_compliance_jobs_post"
+          },
+          {
+            "id": "list_compliance_jobs",
+            "sourceId": "twitter",
+            "operationId": "twitter_compliance_jobs_get"
+          },
+          {
+            "id": "get_compliance_job_by_id",
+            "sourceId": "twitter",
+            "operationId": "twitter_compliance_jobs_id_get"
+          }
+        ],
+        "links": [
+          {
+            "origin": {
+              "actionId": "compliance_job_flow",
+              "fieldPath": "requestBody.createJob.content.application/json.type"
+            },
+            "target": {
+              "actionId": "create_compliance_job",
+              "fieldPath": "requestBody.content.application/json.type"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "compliance_job_flow",
+              "fieldPath": "requestBody.createJob.content.application/json.name"
+            },
+            "target": {
+              "actionId": "create_compliance_job",
+              "fieldPath": "requestBody.content.application/json.name"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "create_compliance_job",
+              "fieldPath": "responseBody.data.id"
+            },
+            "target": {
+              "actionId": "get_compliance_job_by_id",
+              "fieldPath": "parameters.0.value"
+            }
+          }
+        ],
+        "fields": {
+          "parameters": [],
+          "requestBody": {
+            "required": false,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Data needed to create a new compliance job."
+                },
+                "example": {
+                  "createJob": {
+                    "type": "tweets",
+                    "name": "My batch job"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "success": {
+              "description": "Compliance job created, listed, and retrieved successfully."
+            }
+          }
+        }
+      },
+      {
+        "id": "lists_management_flow",
+        "title": "List Management Chain",
+        "description": "Creates a List, adds a user to it, and optionally removes them.",
+        "actions": [
+          {
+            "id": "create_list",
+            "sourceId": "twitter",
+            "operationId": "twitter_lists_post"
+          },
+          {
+            "id": "add_member_to_list",
+            "sourceId": "twitter",
+            "operationId": "twitter_lists_id_members_post"
+          },
+          {
+            "id": "remove_member_from_list",
+            "sourceId": "twitter",
+            "operationId": "twitter_lists_id_members_user_id_delete"
+          }
+        ],
+        "links": [
+          {
+            "origin": {
+              "actionId": "lists_management_flow",
+              "fieldPath": "requestBody.newList.content.application/json.name"
+            },
+            "target": {
+              "actionId": "create_list",
+              "fieldPath": "requestBody.content.application/json.name"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "create_list",
+              "fieldPath": "responseBody.data.id"
+            },
+            "target": {
+              "actionId": "add_member_to_list",
+              "fieldPath": "parameters.0.value"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "lists_management_flow",
+              "fieldPath": "parameters.user_id"
+            },
+            "target": {
+              "actionId": "add_member_to_list",
+              "fieldPath": "requestBody.content.application/json.user_id"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "create_list",
+              "fieldPath": "responseBody.data.id"
+            },
+            "target": {
+              "actionId": "remove_member_from_list",
+              "fieldPath": "parameters.0.value"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "lists_management_flow",
+              "fieldPath": "parameters.user_id"
+            },
+            "target": {
+              "actionId": "remove_member_from_list",
+              "fieldPath": "parameters.1.value"
+            }
+          }
+        ],
+        "fields": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "type": "string",
+              "description": "ID of the user to add or remove from the list."
+            }
+          ],
+          "requestBody": {
+            "required": false,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Data needed to create a new list and add or remove users."
+                },
+                "example": {
+                  "newList": {
+                    "name": "Awesome Devs"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "success": {
+              "description": "List created, user added, and/or user removed successfully."
+            }
+          }
+        }
+      },
+      {
+        "id": "advanced_lists_flow",
+        "title": "Advanced Lists Flow (Follow, Pin, Unpin)",
+        "description": "Allows the authenticated user to follow a list, pin it, and later unpin it.",
+        "actions": [
+          {
+            "id": "follow_list",
+            "sourceId": "twitter",
+            "operationId": "twitter_users_id_followed_lists_post"
+          },
+          {
+            "id": "pin_list",
+            "sourceId": "twitter",
+            "operationId": "twitter_users_id_pinned_lists_post"
+          },
+          {
+            "id": "unpin_list",
+            "sourceId": "twitter",
+            "operationId": "twitter_list_user_unpin"
+          }
+        ],
+        "links": [
+          {
+            "origin": { "actionId": null, "fieldPath": "parameters.authenticated_user_id" },
+            "target": { "actionId": "follow_list", "fieldPath": "parameters.0.value" }
+          },
+          {
+            "origin": { "actionId": null, "fieldPath": "parameters.list_id" },
+            "target": { "actionId": "follow_list", "fieldPath": "requestBody.content.application/json.list_id" }
+          },
+          {
+            "origin": { "actionId": null, "fieldPath": "parameters.authenticated_user_id" },
+            "target": { "actionId": "pin_list", "fieldPath": "parameters.0.value" }
+          },
+          {
+            "origin": { "actionId": null, "fieldPath": "parameters.list_id" },
+            "target": { "actionId": "pin_list", "fieldPath": "requestBody.content.application/json.list_id" }
+          },
+          {
+            "origin": { "actionId": null, "fieldPath": "parameters.authenticated_user_id" },
+            "target": { "actionId": "unpin_list", "fieldPath": "parameters.0.value" }
+          },
+          {
+            "origin": { "actionId": null, "fieldPath": "parameters.list_id" },
+            "target": { "actionId": "unpin_list", "fieldPath": "parameters.1.value" }
+          }
+        ],
+        "fields": {
+          "parameters": [
+            {
+              "name": "authenticated_user_id",
+              "type": "string",
+              "description": "ID of the user performing the follow/pin actions."
+            },
+            {
+              "name": "list_id",
+              "type": "string",
+              "description": "ID of the list to follow/pin/unpin."
+            }
+          ],
+          "requestBody": {
+            "required": false,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Body required by follow/pin endpoints (often just a list_id)."
+                },
+                "example": {
+                  "list_id": "123456789"
+                }
+              }
+            }
+          },
+          "responses": {
+            "success": {
+              "description": "List followed, pinned, and unpinned successfully."
+            }
+          }
+        }
+      },
+      {
+        "id": "user_relationship_flow",
+        "title": "User Relationship Flow",
+        "description": "Demonstrates how to follow, unfollow, block, unblock, mute, and unmute a user. Typically, you supply 'source_user_id' (your ID) and 'target_user_id'.",
+        "actions": [
+          {
+            "id": "follow_user",
+            "sourceId": "twitter",
+            "operationId": "twitter_users_id_following_post"
+          },
+          {
+            "id": "unfollow_user",
+            "sourceId": "twitter",
+            "operationId": "twitter_users_source_user_id_following_target_user_id_delete"
+          },
+          {
+            "id": "block_user",
+            "sourceId": "twitter",
+            "operationId": "twitter_users_id_blocking_post"
+          },
+          {
+            "id": "unblock_user",
+            "sourceId": "twitter",
+            "operationId": "twitter_users_source_user_id_blocking_target_user_id_delete"
+          },
+          {
+            "id": "mute_user",
+            "sourceId": "twitter",
+            "operationId": "twitter_users_id_muting_post"
+          },
+          {
+            "id": "unmute_user",
+            "sourceId": "twitter",
+            "operationId": "twitter_users_source_user_id_muting_target_user_id_delete"
+          }
+        ],
+        "links": [
+          {
+            "origin": {
+              "actionId": "user_relationship_flow",
+              "fieldPath": "parameters.my_user_id"
+            },
+            "target": {
+              "actionId": "follow_user",
+              "fieldPath": "parameters.0.value"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "user_relationship_flow",
+              "fieldPath": "requestBody.follow.content.application/json.target_user_id"
+            },
+            "target": {
+              "actionId": "follow_user",
+              "fieldPath": "requestBody.content.application/json.target_user_id"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "user_relationship_flow",
+              "fieldPath": "parameters.my_user_id"
+            },
+            "target": {
+              "actionId": "unfollow_user",
+              "fieldPath": "parameters.0.value"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "user_relationship_flow",
+              "fieldPath": "parameters.target_user_id"
+            },
+            "target": {
+              "actionId": "unfollow_user",
+              "fieldPath": "parameters.1.value"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "user_relationship_flow",
+              "fieldPath": "parameters.my_user_id"
+            },
+            "target": {
+              "actionId": "block_user",
+              "fieldPath": "parameters.0.value"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "user_relationship_flow",
+              "fieldPath": "requestBody.block.content.application/json.target_user_id"
+            },
+            "target": {
+              "actionId": "block_user",
+              "fieldPath": "requestBody.content.application/json.target_user_id"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "user_relationship_flow",
+              "fieldPath": "parameters.my_user_id"
+            },
+            "target": {
+              "actionId": "unblock_user",
+              "fieldPath": "parameters.0.value"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "user_relationship_flow",
+              "fieldPath": "parameters.target_user_id"
+            },
+            "target": {
+              "actionId": "unblock_user",
+              "fieldPath": "parameters.1.value"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "user_relationship_flow",
+              "fieldPath": "parameters.my_user_id"
+            },
+            "target": {
+              "actionId": "mute_user",
+              "fieldPath": "parameters.0.value"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "user_relationship_flow",
+              "fieldPath": "requestBody.mute.content.application/json.target_user_id"
+            },
+            "target": {
+              "actionId": "mute_user",
+              "fieldPath": "requestBody.content.application/json.target_user_id"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "user_relationship_flow",
+              "fieldPath": "parameters.my_user_id"
+            },
+            "target": {
+              "actionId": "unmute_user",
+              "fieldPath": "parameters.0.value"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "user_relationship_flow",
+              "fieldPath": "parameters.target_user_id"
+            },
+            "target": {
+              "actionId": "unmute_user",
+              "fieldPath": "parameters.1.value"
+            }
+          }
+        ],
+        "fields": {
+          "parameters": [
+            {
+              "name": "my_user_id",
+              "type": "string",
+              "description": "The ID of the authenticated user performing these actions."
+            },
+            {
+              "name": "target_user_id",
+              "type": "string",
+              "description": "The ID of the user you want to follow, block, etc."
+            }
+          ],
+          "requestBody": {
+            "required": false,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Example bodies for follow/mute/block endpoints."
+                },
+                "example": {
+                  "follow": {
+                    "target_user_id": "12345"
+                  },
+                  "block": {
+                    "target_user_id": "67890"
+                  },
+                  "mute": {
+                    "target_user_id": "11111"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "success": {
+              "description": "Successfully followed, unfollowed, blocked, unblocked, muted, or unmuted the user."
+            }
+          }
+        }
+      },
+      {
+        "id": "tweet_engagement_flow",
+        "title": "Tweet Engagement Flow",
+        "description": "Illustration of liking a Tweet and retweeting it. Often requires your user_id plus the tweet_id you plan to engage with.",
+        "actions": [
+          {
+            "id": "like_tweet",
+            "sourceId": "twitter",
+            "operationId": "twitter_users_id_likes_post"
+          },
+          {
+            "id": "retweet_tweet",
+            "sourceId": "twitter",
+            "operationId": "twitter_users_id_retweets_post"
+          }
+        ],
+        "links": [
+          {
+            "origin": {
+              "actionId": "tweet_engagement_flow",
+              "fieldPath": "parameters.my_user_id"
+            },
+            "target": {
+              "actionId": "like_tweet",
+              "fieldPath": "parameters.0.value"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "tweet_engagement_flow",
+              "fieldPath": "requestBody.likeTweet.content.application/json.tweet_id"
+            },
+            "target": {
+              "actionId": "like_tweet",
+              "fieldPath": "requestBody.content.application/json.tweet_id"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "tweet_engagement_flow",
+              "fieldPath": "parameters.my_user_id"
+            },
+            "target": {
+              "actionId": "retweet_tweet",
+              "fieldPath": "parameters.0.value"
+            }
+          },
+          {
+            "origin": {
+              "actionId": "tweet_engagement_flow",
+              "fieldPath": "requestBody.retweet.content.application/json.tweet_id"
+            },
+            "target": {
+              "actionId": "retweet_tweet",
+              "fieldPath": "requestBody.content.application/json.tweet_id"
+            }
+          }
+        ],
+        "fields": {
+          "parameters": [
+            {
+              "name": "my_user_id",
+              "type": "string",
+              "description": "ID of the user liking or retweeting the Tweet."
+            }
+          ],
+          "requestBody": {
+            "required": false,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Request bodies for like/retweet endpoints, needing the target tweet_id."
+                },
+                "example": {
+                  "likeTweet": {
+                    "tweet_id": "9876543210"
+                  },
+                  "retweet": {
+                    "tweet_id": "9876543210"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "success": {
+              "description": "Tweet was liked and/or retweeted successfully."
+            }
+          }
+        }
+      },
+      {
+        "id": "tweet_creation_flow",
+        "title": "Tweet Creation Flow",
+        "description": "Creates (posts) a new Tweet for the authenticated user.",
+        "actions": [
+          {
+            "id": "create_tweet",
+            "sourceId": "twitter",
+            "operationId": "twitter_tweets_post"
+          }
+        ],
+        "links": [
+          {
+            "origin": {
+              "actionId": "tweet_creation_flow",
+              "fieldPath": "requestBody.tweetContent.content.application/json.text"
+            },
+            "target": {
+              "actionId": "create_tweet",
+              "fieldPath": "requestBody.content.application/json.text"
+            }
+          }
+        ],
+        "fields": {
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Body data needed to create a tweet, such as 'text'."
+                },
+                "example": {
+                  "tweetContent": {
+                    "text": "Hello world from my brand-new Tweet!"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "success": {
+              "description": "New Tweet created successfully (Tweet object returned)."
+            }
+          }
+        }
+      }
+    ],
+    "additionalProperties": true
+  }
